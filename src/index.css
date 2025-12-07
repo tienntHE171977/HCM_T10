@@ -1,0 +1,468 @@
+@import "leaflet/dist/leaflet.css";
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+/* ========== ROOT VARIABLES ========== */
+:root {
+  /* Vietnamese Color Palette */
+  --vn-red: #da251d;
+  --vn-red-dark: #b71c1c;
+  --vn-gold: #ffbf00;
+  --vn-gold-light: #ffd54f;
+
+  /* Accent Colors */
+  --accent-green: #0d9488;
+  --accent-green-light: #14b8a6;
+  --accent-green-dark: #0f766e;
+
+  /* Neutrals */
+  --bg-cream: #fef9f3;
+  --bg-light: #ffffff;
+  --text-dark: #1f2937;
+  --text-medium: #4b5563;
+  --text-light: #6b7280;
+
+  /* Shadows & Effects */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* ========== GLOBAL STYLES ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--text-dark);
+  background: var(--bg-cream);
+  /* Removed overflow: hidden to allow home page scroll */
+}
+
+/* ========== LAYOUT ========== */
+.app-container {
+  display: flex;
+  height: 100vh;
+  background: linear-gradient(135deg, rgba(254, 249, 243, 0.95) 0%, rgba(255, 245, 235, 0.95) 100%),
+    url('/lotus-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: overlay;
+  overflow: hidden;
+  /* Keep overflow hidden only for map page */
+}
+
+/* ========== MAP PANEL ========== */
+.map-panel {
+  flex: 2;
+  position: relative;
+  box-shadow: var(--shadow-lg);
+  z-index: 1;
+}
+
+.map-panel::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(180deg,
+      transparent 0%,
+      var(--vn-gold) 50%,
+      transparent 100%);
+  opacity: 0.3;
+}
+
+/* ========== INFO PANEL ========== */
+.info-panel {
+  flex: 1;
+  min-width: 380px;
+  max-width: 500px;
+  padding: 32px 28px;
+  box-sizing: border-box;
+  overflow: hidden;
+  /* Changed from overflow-y: auto */
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.97) 0%, rgba(254, 254, 254, 0.95) 100%);
+  border-left: 1px solid rgba(218, 37, 29, 0.08);
+  position: relative;
+  backdrop-filter: blur(10px);
+  display: flex;
+  /* Added flex */
+  flex-direction: column;
+  /* Added column layout */
+}
+
+/* Decorative lotus background */
+.info-panel::before {
+  content: '';
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 500px;
+  height: 500px;
+  background: url('/lotus-mandala.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 0;
+  animation: subtle-float 20s ease-in-out infinite;
+}
+
+@keyframes subtle-float {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+}
+
+.info-panel>* {
+  position: relative;
+  z-index: 1;
+}
+
+/* ========== TYPOGRAPHY ========== */
+.info-panel h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--vn-red);
+  margin-bottom: 8px;
+  line-height: 1.3;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, var(--vn-red) 0%, var(--vn-red-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.info-panel h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.info-panel h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--accent-green-dark);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--vn-gold);
+  padding-bottom: 8px;
+}
+
+.info-panel p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-medium);
+  margin-bottom: 12px;
+}
+
+/* ========== BUTTONS ========== */
+.info-panel button {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.info-panel button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.info-panel button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.info-panel button:active {
+  transform: scale(0.95);
+}
+
+/* ========== BLOCKQUOTE ========== */
+blockquote {
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--accent-green-dark);
+  border-left: 4px solid var(--vn-gold);
+  padding-left: 16px;
+  margin: 16px 0;
+  background: linear-gradient(90deg, rgba(255, 191, 0, 0.05) 0%, transparent 100%);
+  padding: 12px 12px 12px 16px;
+  border-radius: 0 8px 8px 0;
+  position: relative;
+}
+
+blockquote::before {
+  content: '"';
+  font-size: 48px;
+  font-family: 'Playfair Display', serif;
+  position: absolute;
+  left: -8px;
+  top: -8px;
+  color: var(--vn-gold);
+  opacity: 0.3;
+}
+
+/* ========== IMAGES ========== */
+.info-panel img {
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+}
+
+.info-panel img:hover {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-xl);
+}
+
+/* ========== STOP LIST ========== */
+.stop-list {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 2px solid rgba(218, 37, 29, 0.1);
+  flex: 1;
+  /* Take remaining space */
+  overflow-y: auto;
+  /* Enable scrolling */
+  min-height: 0;
+  /* Important for flex scrolling */
+}
+
+/* Custom Scrollbar for stop-list */
+.stop-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.stop-list::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 10px;
+}
+
+.stop-list::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--vn-red), var(--vn-red-dark));
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.stop-list::-webkit-scrollbar-thumb:hover {
+  background: var(--vn-red-dark);
+}
+
+.stop-item {
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #ffffff;
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.stop-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  background: linear-gradient(180deg, var(--vn-red), var(--vn-gold));
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+
+.stop-item:hover {
+  background: linear-gradient(135deg, rgba(13, 148, 136, 0.05) 0%, rgba(255, 191, 0, 0.05) 100%);
+  transform: translateX(4px);
+  border-color: var(--vn-gold);
+  box-shadow: var(--shadow-md);
+}
+
+.stop-item:hover::before {
+  transform: scaleY(1);
+}
+
+.stop-item.active {
+  background: linear-gradient(135deg, rgba(218, 37, 29, 0.08) 0%, rgba(255, 191, 0, 0.08) 100%);
+  border-color: var(--vn-red);
+  font-weight: 600;
+  box-shadow: var(--shadow-md);
+  transform: translateX(4px);
+}
+
+.stop-item.active::before {
+  transform: scaleY(1);
+}
+
+.stop-item-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+  transition: color 0.3s ease;
+}
+
+.stop-item:hover .stop-item-title,
+.stop-item.active .stop-item-title {
+  color: var(--vn-red);
+}
+
+.stop-item-year {
+  font-size: 13px;
+  color: var(--text-light);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stop-item-year::before {
+  content: '📅';
+  font-size: 12px;
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Apply animations */
+.info-panel>div {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.stop-item {
+  animation: slideInRight 0.4s ease-out backwards;
+}
+
+.stop-item:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.stop-item:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.stop-item:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+.stop-item:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+.stop-item:nth-child(5) {
+  animation-delay: 0.25s;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1024px) {
+  .app-container {
+    flex-direction: column;
+  }
+
+  .map-panel {
+    height: 50vh;
+  }
+
+  .info-panel {
+    min-width: 100%;
+    max-width: 100%;
+    height: 50vh;
+    padding: 24px 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .info-panel h2 {
+    font-size: 24px;
+  }
+
+  .info-panel h3 {
+    font-size: 20px;
+  }
+
+  .info-panel {
+    padding: 20px 16px;
+  }
+}
+
+/* ========== LEAFLET CUSTOMIZATION ========== */
+.leaflet-popup-content-wrapper {
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  border: 2px solid var(--vn-gold);
+}
+
+.leaflet-popup-content {
+  font-family: 'Inter', sans-serif;
+  color: var(--text-dark);
+}
+
+.leaflet-popup-content strong {
+  color: var(--vn-red);
+  font-size: 16px;
+}
