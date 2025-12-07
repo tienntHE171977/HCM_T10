@@ -85,8 +85,8 @@ body {
   max-width: 500px;
   padding: 32px 28px;
   box-sizing: border-box;
-  overflow: hidden;
-  /* Changed from overflow-y: auto */
+  overflow-y: auto;
+  /* Enable scrolling for entire panel */
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.97) 0%, rgba(254, 254, 254, 0.95) 100%);
   border-left: 1px solid rgba(218, 37, 29, 0.08);
   position: relative;
@@ -250,12 +250,8 @@ blockquote::before {
   margin-top: 24px;
   padding-top: 20px;
   border-top: 2px solid rgba(218, 37, 29, 0.1);
-  flex: 1;
-  /* Take remaining space */
-  overflow-y: auto;
-  /* Enable scrolling */
-  min-height: 0;
-  /* Important for flex scrolling */
+  flex-shrink: 0;
+  /* Prevent shrinking */
 }
 
 /* Custom Scrollbar for stop-list */
