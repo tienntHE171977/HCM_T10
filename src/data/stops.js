@@ -26,7 +26,7 @@ export const STOPS = [
       "Người theo gia đình vào Huế, học tại các trường ở kinh đô. Tại đây, Người chứng kiến cảnh lầm than của nhân dân và sự bất lực của triều đình phong kiến trước ách thống trị thực dân.",
     quote:
       "Những năm tháng ở Huế giúp Người nhận rõ hơn nỗi khổ của dân tộc và thôi thúc ý chí tìm con đường giải phóng.",
-    imageUrl: "https://vi.wikipedia.org/wiki/Kinh_th%C3%A0nh_Hu%E1%BA%BF",
+    imageUrl: "https://lh7-rt.googleusercontent.com/docsz/AD_4nXeEtMKj_6aPhPXVLIwfF5ePZhqz6TMMIt-AVhADsh-eICh7sa06c1yGD3IhWR2n0U372hCLxVtMzsRAL6MPFsXkDudpAb_hVdZh8Px_NA8D4EmKH6Jo-R0ZpLYYG0qWMbigCs6pjA?key=RoIqy1PWMW019GPgAQOIPudU",
     moreLink: ""
   },
   {
@@ -52,7 +52,7 @@ export const STOPS = [
       "Marseille là một trong những bến cảng đầu tiên Người đặt chân tới khi tàu cập bến châu Âu. Từ đây, Người tiếp tục nhiều chuyến đi đến các nước khác, quan sát đời sống công nhân, nhân dân lao động.",
     quote:
       "Qua mỗi bến cảng, Người từng bước hiểu rõ bản chất áp bức, bóc lột của chủ nghĩa thực dân.",
-    imageUrl: "https://truyenhinhnghean.vn/hoat-dong-ntv/201911/hai-cang-marseille-noi-in-dau-nguyen-tat-thanh-trong-hanh-trinh-ra-di-tim-duong-cuu-nuoc-e9d160d/",
+    imageUrl: "https://i1-vnexpress.vnecdn.net/2025/08/15/DSC-3798-1755240269.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=29Qa4xMdVYVkSQvgrq2vag",
     moreLink: ""
   },
   {
